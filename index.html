@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A game-style guide to ARFID for brothers and sisters, and why words at the table matter.">
+<meta property="og:title" content="The Food Alarm">
+<meta property="og:description" content="A game-style guide to ARFID for brothers and sisters, and why words at the table matter.">
+<title>The Food Alarm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+/* Layout: one column of chunky sticker panels, each a "level", with an interactive toy in most of them */
+:root {
+  --paper: #E9EDF5;
+  --card: #FFFFFF;
+  --ink: #14182B;
+  --muted: #565E78;
+  --line: #14182B;
+  --shadow: #14182B;
+  --blue: #2F4FE0;
+  --blue-soft: #DCE2FF;
+  --red: #F2412F;
+  --red-soft: #FFE0DC;
+  --yellow: #FFC53A;
+  --green: #138A62;
+  --green-soft: #D3F3E6;
+  --on-accent: #FFFFFF;
+  --f-display: "Bungee", "Arial Black", Impact, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #10132A; --card: #1B2044; --ink: #F1F3FA; --muted: #A6ADC8;
+    --line: #3D4682; --shadow: #05061A;
+    --blue: #7F95FF; --blue-soft: #27306A; --red: #FF6B5C; --red-soft: #4A2230;
+    --yellow: #FFD15C; --green: #3FD39F; --green-soft: #173F3A; --on-accent: #10132A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #10132A; --card: #1B2044; --ink: #F1F3FA; --muted: #A6ADC8;
+  --line: #3D4682; --shadow: #05061A;
+  --blue: #7F95FF; --blue-soft: #27306A; --red: #FF6B5C; --red-soft: #4A2230;
+  --yellow: #FFD15C; --green: #3FD39F; --green-soft: #173F3A; --on-accent: #10132A;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 18px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 9vw, 4.2rem); letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.5rem, 5vw, 2.1rem); }
+h3 { font-size: 1.15rem; }
+p { margin: 0; max-width: 62ch; }
+.stack { display: flex; flex-direction: column; gap: 14px; }
+
+.panel {
+  background: var(--card);
+  border: 3px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 6px 6px 0 var(--shadow);
+  padding: 26px clamp(18px, 4vw, 34px);
+  display: flex; flex-direction: column; gap: 18px;
+  min-width: 0;
+}
+.lvl {
+  font-family: var(--f-mono); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue);
+}
+.sib { color: var(--blue); font-weight: 700; }
+.small { font-size: 0.9rem; color: var(--muted); }
+
+/* Hero */
+.hero { gap: 20px; }
+.hero h1 .alarm { color: var(--red); display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1 .alarm { animation: wobble 2.4s ease-in-out 0.4s 2; }
+  @keyframes wobble { 0%,100%{transform:rotate(0)} 10%{transform:rotate(-4deg)} 20%{transform:rotate(4deg)} 30%{transform:rotate(-3deg)} 40%{transform:rotate(0)} }
+}
+.namebox { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.namebox label { font-family: var(--f-mono); font-size: 0.85rem; font-weight: 700; }
+.namebox input {
+  font: inherit; font-size: 1rem; padding: 10px 14px; border: 3px solid var(--line);
+  border-radius: 10px; background: var(--paper); color: var(--ink); width: 220px; max-width: 100%;
+}
+.namebox input:focus-visible, button:focus-visible, .check input:focus-visible + span { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-family: var(--f-mono); font-size: 0.75rem; font-weight: 700; padding: 5px 10px;
+  border: 2px solid var(--line); border-radius: 999px; background: var(--yellow); color: #14182B;
+}
+
+/* Buttons */
+button {
+  font-family: var(--f-body); font-weight: 700; font-size: 0.98rem; cursor: pointer;
+  border: 3px solid var(--line); border-radius: 10px; padding: 10px 14px;
+  background: var(--card); color: var(--ink); box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform .08s, box-shadow .08s; text-align: left;
+}
+button:active { transform: translate(3px,3px); box-shadow: 0 0 0 var(--shadow); }
+
+/* Big definition */
+.acronym { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.acronym div { border: 3px solid var(--line); border-radius: 10px; padding: 12px; background: var(--paper); }
+.acronym b { font-family: var(--f-display); font-weight: 400; font-size: 1.9rem; color: var(--blue); display: block; line-height: 1; }
+.acronym span { font-size: 0.92rem; }
+
+/* Worm / alarm toy */
+.worms {
+  border: 3px dashed var(--line); border-radius: 12px; padding: 16px; background: var(--paper);
+  display: flex; gap: 14px; align-items: center;
+}
+.worms .plate { font-size: 2.6rem; line-height: 1; flex: none; }
+.meter-wrap { display: flex; flex-direction: column; gap: 8px; }
+.meter-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.meter-top strong { font-family: var(--f-display); font-weight: 400; font-size: 1.2rem; }
+.meter-num { font-family: var(--f-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+.meter {
+  height: 30px; border: 3px solid var(--line); border-radius: 999px; overflow: hidden;
+  background: repeating-linear-gradient(90deg, var(--paper) 0 10%, var(--card) 10% 20%);
+}
+.meter i { display: block; height: 100%; width: 70%; background: var(--yellow); transition: width .45s cubic-bezier(.3,1.4,.5,1), background .3s; }
+.meter.hot i { background: var(--red); }
+.meter.calm i { background: var(--green); }
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none; } }
+.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.actions button.up::before { content: "▲ "; color: var(--red); }
+.actions button.down::before { content: "▼ "; color: var(--green); }
+.callout {
+  border-left: 6px solid var(--red); background: var(--red-soft); padding: 12px 16px; border-radius: 0 10px 10px 0;
+}
+.callout.good { border-left-color: var(--green); background: var(--green-soft); }
+
+/* Type cards */
+.types { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.type { display: flex; flex-direction: column; gap: 8px; min-height: 170px; }
+.type .tag { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.type .name { font-family: var(--f-display); font-size: 1.05rem; font-weight: 400; line-height: 1.15; }
+.type .more { font-weight: 400; font-size: 0.95rem; }
+.type[aria-expanded="true"] { background: var(--blue-soft); }
+.type .hint { font-family: var(--f-mono); font-size: 0.75rem; color: var(--blue); margin-top: auto; }
+
+/* Myths */
+.myths { display: flex; flex-direction: column; gap: 10px; }
+.myth { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.myth .claim { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.myth .stamp {
+  font-family: var(--f-display); font-weight: 400; font-size: 0.8rem; color: var(--red);
+  border: 2px solid var(--red); padding: 2px 8px; border-radius: 6px; transform: rotate(-4deg); flex: none;
+}
+.myth .truth { font-weight: 400; }
+
+/* Sorter */
+.sorter { display: flex; flex-direction: column; gap: 14px; }
+.progress { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.say {
+  border: 3px solid var(--line); border-radius: 14px; background: var(--yellow); color: #14182B;
+  padding: 22px 20px; font-size: 1.25rem; font-weight: 700; min-height: 120px;
+  display: flex; align-items: center; position: relative;
+}
+.say::after {
+  content: ""; position: absolute; left: 34px; bottom: -16px; width: 26px; height: 26px;
+  background: var(--yellow); border-right: 3px solid var(--line); border-bottom: 3px solid var(--line);
+  transform: rotate(45deg);
+}
+.say.action { background: var(--blue-soft); color: var(--ink); font-style: italic; }
+.say.action::after { background: var(--blue-soft); }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.choices button { text-align: center; font-family: var(--f-display); font-weight: 400; font-size: 1.1rem; padding: 14px; }
+.choices .help { background: var(--green); color: var(--on-accent); }
+.choices .hurt { background: var(--red); color: var(--on-accent); }
+.verdict { border: 3px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.verdict.right { background: var(--green-soft); }
+.verdict.wrong { background: var(--red-soft); }
+.verdict strong { font-family: var(--f-display); font-weight: 400; }
+.next { align-self: flex-start; background: var(--blue); color: var(--on-accent); }
+.final { text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.final .rank { font-family: var(--f-display); font-size: 1.8rem; color: var(--blue); line-height: 1.1; }
+
+/* You section */
+.you-list { display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.you-list li { padding-left: 26px; position: relative; }
+.you-list li::before { content: "→"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+
+/* Loadout */
+.loadout { display: flex; flex-direction: column; gap: 10px; }
+.check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; padding: 10px 12px; border: 2px solid var(--line); border-radius: 10px; background: var(--paper); }
+.check input { position: absolute; opacity: 0; pointer-events: none; }
+.check .box {
+  flex: none; width: 26px; height: 26px; border: 3px solid var(--line); border-radius: 6px; background: var(--card);
+  display: grid; place-items: center; font-weight: 700; color: var(--on-accent);
+}
+.check input:checked + .box { background: var(--green); }
+.check input:checked + .box::after { content: "✓"; }
+.check .txt { display: flex; flex-direction: column; }
+.check .txt b { font-weight: 700; }
+.check .txt span { font-size: 0.92rem; color: var(--muted); }
+.unlock { font-family: var(--f-mono); font-weight: 700; font-size: 0.9rem; color: var(--green); }
+
+.end { text-align: center; align-items: center; background: var(--blue); color: var(--on-accent); border-color: var(--line); }
+.end h2 { color: var(--on-accent); }
+.end p { margin: 0 auto; }
+
+@media (max-width: 480px) {
+  body { font-size: 17px; }
+  .choices { grid-template-columns: 1fr 1fr; }
+  .worms { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="panel hero">
+    <div class="lvl">A guide for brothers and sisters</div>
+    <h1>The Food <span class="alarm">Alarm</span></h1>
+    <p>So <span class="sib">your brother</span> has something called ARFID. You've probably thought at least once: <em>why can't he just eat the food?</em></p>
+    <p>Fair question. This explains it. There are a couple of games. It takes about ten minutes.</p>
+    <div class="namebox">
+      <label for="sibname">His name (optional):</label>
+      <input id="sibname" type="text" maxlength="20" placeholder="e.g. Ellie" autocomplete="off">
+    </div>
+    <div class="meta"><span class="chip">6 levels</span><span class="chip">1 boss quiz</span><span class="chip">0 lectures (mostly)</span></div>
+  </section>
+
+  <!-- LEVEL 1 -->
+  <section class="panel">
+    <div class="lvl">Level 1 · What it even is</div>
+    <h2>ARFID is a real thing with a real name</h2>
+    <div class="acronym">
+      <div><b>A</b><span>Avoidant</span></div>
+      <div><b>R</b><span>Restrictive</span></div>
+      <div><b>F</b><span>Food</span></div>
+      <div><b>I</b><span>Intake</span></div>
+      <div><b>D</b><span>Disorder</span></div>
+    </div>
+    <p>Translation: <span class="sib">your brother</span>'s brain makes eating a lot of foods feel hard, gross, or straight-up scary. So he avoids them and sticks to a small list of foods that feel safe.</p>
+    <p>Doctors treat it. It has nothing to do with wanting to be skinny, and it is not a phase or a bad attitude.</p>
+  </section>
+
+  <!-- LEVEL 2: ALARM TOY -->
+  <section class="panel">
+    <div class="lvl">Level 2 · Try it yourself</div>
+    <h2>The worm test</h2>
+    <div class="worms">
+      <div class="plate" aria-hidden="true">🪱🍽️</div>
+      <p>Picture this. Someone puts a plate of cold, wiggly worms in front of you and says, <strong>"Come on, it's just one bite."</strong> Your stomach flips. Your throat gets tight. You are not hungry anymore, even if you were starving a minute ago.</p>
+    </div>
+    <p>That feeling is your brain's alarm. Everybody has one. In <span class="sib">your brother</span>, the alarm goes off for foods that seem totally normal to you. Pasta. A new brand of chicken nuggets. Something that touched the sauce.</p>
+    <p><strong>Now press the buttons</strong> and watch what different stuff at the dinner table does to the alarm.</p>
+
+    <div class="meter-wrap">
+      <div class="meter-top">
+        <strong id="alarmLabel">Uneasy</strong>
+        <span class="meter-num"><span id="alarmNum">70</span>/100</span>
+      </div>
+      <div class="meter" id="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-label="Food alarm level"><i id="meterFill"></i></div>
+    </div>
+
+    <div class="actions">
+      <button class="up" data-d="12" data-msg="Being watched while you eat makes it way harder.">Everyone stares at his plate</button>
+      <button class="up" data-d="18" data-msg="Pressure makes the alarm louder. Every time.">"Just one bite, it's not a big deal"</button>
+      <button class="up" data-d="15" data-msg="Embarrassment is fuel for the alarm.">"Ew, you're so weird about food"</button>
+      <button class="down" data-d="-18" data-msg="Normal talk pulls attention off the food. The alarm chills.">Everyone talks about the game last night</button>
+      <button class="down" data-d="-14" data-msg="Nobody watching, nobody pushing. That's when bodies can actually eat.">Nobody says anything about the food</button>
+      <button class="down" data-d="-10" data-msg="Something fun to look forward to makes dinner less of a big deal.">"Want to play after dinner?"</button>
+    </div>
+    <p class="small" id="alarmMsg" aria-live="polite">Start: worms on the plate. Alarm at 70.</p>
+    <button id="alarmReset" style="align-self:flex-start">Reset the alarm</button>
+
+    <div class="callout">
+      <p><strong>The big idea:</strong> when the alarm is loud, a body basically can't eat. Hunger shuts off. That's why yelling, bribing, or daring doesn't work. It makes the alarm louder.</p>
+    </div>
+  </section>
+
+  <!-- LEVEL 3: TYPES -->
+  <section class="panel">
+    <div class="lvl">Level 3 · Different versions</div>
+    <h2>Three ways the alarm can be wired</h2>
+    <p>ARFID doesn't look the same in everyone. Lots of kids have a mix. Tap each one.</p>
+    <div class="types">
+      <button class="type" aria-expanded="false">
+        <span class="tag">Sensory</span>
+        <span class="name">Volume knob stuck on max</span>
+        <span class="more" hidden>Textures, smells, and tastes hit way harder than they do for you. A mushy bite can feel like biting into a slug. A strong smell can make him gag before the food even gets close.</span>
+        <span class="hint">tap to open</span>
+      </button>
+      <button class="type" aria-expanded="false">
+        <span class="tag">Fear</span>
+        <span class="name">Bad memory on repeat</span>
+        <span class="more" hidden>Maybe he choked or threw up once. Now his brain filed food under "danger." It's like if you crashed your bike once and your body freezes every time you get near that hill.</span>
+        <span class="hint">tap to open</span>
+      </button>
+      <button class="type" aria-expanded="false">
+        <span class="tag">Low hunger</span>
+        <span class="name">Fuel light that never comes on</span>
+        <span class="more" hidden>His body barely sends "I'm hungry" signals. Eating feels like a chore, like homework nobody asked for. He's not trying to skip meals. He honestly just doesn't feel it.</span>
+        <span class="hint">tap to open</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- LEVEL 4: MYTHS -->
+  <section class="panel">
+    <div class="lvl">Level 4 · Myth busting</div>
+    <h2>Stuff people think that's wrong</h2>
+    <div class="myths">
+      <button class="myth" aria-expanded="false"><span class="claim"><span>"He's just picky."</span><span class="stamp">Busted</span></span><span class="truth" hidden>Picky eaters will eat when they're hungry enough and usually grow out of it. ARFID doesn't work like that. It's a medical condition and it needs real treatment.</span></button>
+      <button class="myth" aria-expanded="false"><span class="claim"><span>"He's doing it for attention."</span><span class="stamp">Busted</span></span><span class="truth" hidden>Most kids with ARFID wish everybody would stop looking at their plate. The attention is the part they hate.</span></button>
+      <button class="myth" aria-expanded="false"><span class="claim"><span>"If he got hungry enough, he'd eat."</span><span class="stamp">Busted</span></span><span class="truth" hidden>For a lot of kids with ARFID, the alarm beats hunger. Every time. That's exactly why it's a disorder and not a choice.</span></button>
+      <button class="myth" aria-expanded="false"><span class="claim"><span>"It's about wanting to be skinny."</span><span class="stamp">Busted</span></span><span class="truth" hidden>Different thing. ARFID isn't about weight or how someone looks. It's about the food itself feeling wrong or scary.</span></button>
+      <button class="myth" aria-expanded="false"><span class="claim"><span>"He'll be like this forever."</span><span class="stamp">Busted</span></span><span class="truth" hidden>Kids get better with treatment. It's slow. New foods take a long time. But it does move.</span></button>
+    </div>
+  </section>
+
+  <!-- LEVEL 5: SORTER -->
+  <section class="panel">
+    <div class="lvl">Level 5 · Boss quiz</div>
+    <h2>Why words matter: help or hurt?</h2>
+    <p>Words are basically buttons on the alarm. Some turn it up. Some turn it down. Sort each one. A few are trickier than they look.</p>
+    <div class="sorter" id="sorter">
+      <div class="progress"><span id="qCount">1 / 13</span><span id="qScore">Score: 0</span></div>
+      <div class="say" id="say"></div>
+      <div class="choices" id="choices">
+        <button class="help" data-a="help">Helps</button>
+        <button class="hurt" data-a="hurt">Hurts</button>
+      </div>
+      <div class="verdict" id="verdict" hidden>
+        <strong id="vTitle"></strong>
+        <p id="vText"></p>
+      </div>
+      <button class="next" id="nextBtn" hidden>Next one →</button>
+    </div>
+  </section>
+
+  <!-- LEVEL 6: YOU -->
+  <section class="panel">
+    <div class="lvl">Level 6 · The part about you</div>
+    <h2>Real talk: this can be annoying</h2>
+    <p>Plans change because of food. <span class="sib">Your brother</span> might get extra attention. Dinner can be tense. And now somebody handed you a guide about being careful with your words.</p>
+    <p>Feeling annoyed, left out, or frustrated about that is allowed. It doesn't make you a bad brother.</p>
+    <ul class="you-list">
+      <li>Take those feelings to a parent, privately. Not to the dinner table.</li>
+      <li>Ask for one-on-one time if you're not getting enough. That's a fair thing to want.</li>
+      <li>You are not the food police. Getting <span class="sib">your brother</span> to eat is not your job. That's for his doctors, his therapist, and your parents.</li>
+      <li>Your job is way easier: be a normal, decent brother at the table.</li>
+    </ul>
+  </section>
+
+  <!-- LOADOUT -->
+  <section class="panel">
+    <div class="lvl">Your loadout</div>
+    <h2>Seven moves that actually help</h2>
+    <p class="small">Check off the ones you'll do. They save on this device.</p>
+    <div class="loadout" id="loadout">
+      <label class="check"><input type="checkbox" id="m1"><span class="box"></span><span class="txt"><b>Talk about normal stuff at meals</b><span>Games, school, that video. Anything but food.</span></span></label>
+      <label class="check"><input type="checkbox" id="m2"><span class="box"></span><span class="txt"><b>Leave his plate alone</b><span>No comments, no faces, no counting bites.</span></span></label>
+      <label class="check"><input type="checkbox" id="m3"><span class="box"></span><span class="txt"><b>Don't mess with his safe foods</b><span>Ask before eating the last of anything he relies on.</span></span></label>
+      <label class="check"><input type="checkbox" id="m4"><span class="box"></span><span class="txt"><b>Keep it private</b><span>If friends ask, "he's got some health stuff" is enough.</span></span></label>
+      <label class="check"><input type="checkbox" id="m5"><span class="box"></span><span class="txt"><b>Skip the dares and the hype</b><span>No "bet you can't," no "everybody look, he ate it!"</span></span></label>
+      <label class="check"><input type="checkbox" id="m6"><span class="box"></span><span class="txt"><b>Slip up? Say "my bad" and move on</b><span>Short and quick beats a big apology.</span></span></label>
+      <label class="check"><input type="checkbox" id="m7"><span class="box"></span><span class="txt"><b>Bring questions to a parent</b><span>Any question is okay to ask. Just not in front of him.</span></span></label>
+    </div>
+    <p class="unlock" id="unlock" aria-live="polite"></p>
+  </section>
+
+  <section class="panel end">
+    <h2>That's the whole game</h2>
+    <p>You don't have to fix anything. You just have to not make the alarm louder. Honestly, that's a big deal, and <span class="sib">your brother</span> will notice even if he never says it.</p>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  // ---- name personalization ----
+  const input = document.getElementById('sibname');
+  const sibEls = () => document.querySelectorAll('.sib');
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function applyName() {
+    const n = input.value.trim();
+    sibEls().forEach(el => {
+      const cap = el.dataset.cap || (el.dataset.cap = /^[A-Z]/.test(el.textContent) ? '1' : '0');
+      if (n) el.textContent = n;
+      else el.textContent = cap === '1' ? 'Your brother' : 'your brother';
+    });
+  }
+  const saved = load('fa-name');
+  if (saved) input.value = saved;
+  input.addEventListener('input', () => { store('fa-name', input.value.trim()); applyName(); renderQ(); });
+  applyName();
+  const nm = () => input.value.trim() || 'your brother';
+  const Nm = () => { const n = input.value.trim(); return n || 'Your brother'; };
+
+  // ---- alarm toy ----
+  let level = 70;
+  const fill = document.getElementById('meterFill'), meter = document.getElementById('meter');
+  const lbl = document.getElementById('alarmLabel'), num = document.getElementById('alarmNum'), msg = document.getElementById('alarmMsg');
+  function drawAlarm() {
+    fill.style.width = level + '%'; num.textContent = level; meter.setAttribute('aria-valuenow', level);
+    meter.classList.toggle('hot', level >= 80); meter.classList.toggle('calm', level <= 40);
+    lbl.textContent = level >= 95 ? 'FULL ALARM. Nothing is getting eaten.' : level >= 80 ? 'Alarm blaring' : level > 40 ? 'Uneasy' : level > 15 ? 'Calmer. Eating is possible.' : 'Chill';
+  }
+  document.querySelectorAll('.actions button').forEach(b => b.addEventListener('click', () => {
+    level = Math.max(5, Math.min(100, level + Number(b.dataset.d)));
+    msg.textContent = b.dataset.msg; drawAlarm();
+  }));
+  document.getElementById('alarmReset').addEventListener('click', () => { level = 70; msg.textContent = 'Back to the worms. Alarm at 70.'; drawAlarm(); });
+  drawAlarm();
+
+  // ---- expanders ----
+  document.querySelectorAll('.type, .myth').forEach(b => b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open);
+    const body = b.querySelector('.more, .truth'); body.hidden = !open;
+    const h = b.querySelector('.hint'); if (h) h.textContent = open ? 'tap to close' : 'tap to open';
+  }));
+
+  // ---- sorter ----
+  const Q = [
+    { t: () => `"Just eat it. It's literally just pasta."`, a: 'hurt', w: `Pressure cranks the alarm. If "just eating it" worked, ${nm()} would've done it already.` },
+    { t: () => `"So did you see the game last night?"`, a: 'help', w: `Normal talk at the table is one of the best things you can do. It pulls focus off the food and the alarm drops.` },
+    { t: () => `"Ew, you eat the same thing every single day."`, a: 'hurt', w: `He already knows. Pointing it out just adds embarrassment, and embarrassment feeds the alarm.` },
+    { t: () => `You eat the last of ${nm()}'s safe food without asking.`, act: true, a: 'hurt', w: `Safe foods are the ones his brain trusts. Running out isn't a snack problem, it can mean a meal he can't eat. Ask first.` },
+    { t: () => `You say nothing at all about what's on his plate.`, act: true, a: 'help', w: `The most underrated move there is. His plate is his business.` },
+    { t: () => `"Bet you can't eat one of these."`, a: 'hurt', w: `A dare turns food into a test he can fail in front of everyone. Hard pass.` },
+    { t: () => `"Mom, why does ${nm()} get a different dinner?" (asked at the table)`, a: 'hurt', w: `Fair question. Wrong place. Ask a parent later when it's just you two. You deserve a real answer.` },
+    { t: () => `"WHOA, you ate a carrot! Everybody look!"`, a: 'hurt', tricky: true, w: `Sneaky one. Even hype is a spotlight, and spotlights turn the alarm up. If he tries something new, act like it's no big deal. That's the actual support.` },
+    { t: () => `"Want to play after dinner?"`, a: 'help', w: `Something to look forward to makes dinner feel less like a test.` },
+    { t: () => `You laugh when he gags.`, act: true, a: 'hurt', w: `Gagging isn't fake or dramatic. It's the alarm going off in his body. Laughing makes him want to avoid eating around people at all.` },
+    { t: () => `You tell a friend, "My brother has a weird eating thing."`, act: true, a: 'hurt', w: `His health stuff is his to share. If someone asks, "he's got some health stuff going on" covers it.` },
+    { t: () => `"If you don't eat more, you're going to get really sick."`, a: 'hurt', tricky: true, w: `Probably meant to help. But scaring someone doesn't make the food less scary. It makes everything scarier. Leave the health talk to the grown-ups and doctors.` },
+    { t: () => `You slip and say something dumb, then say "my bad" and drop it.`, act: true, a: 'help', w: `Everybody slips. A quick "my bad" fixes more than a big speech, and it shows him you're on his side.` },
+  ];
+  let qi = 0, score = 0, answered = false;
+  const say = document.getElementById('say'), choices = document.getElementById('choices'),
+        verdict = document.getElementById('verdict'), vTitle = document.getElementById('vTitle'),
+        vText = document.getElementById('vText'), nextBtn = document.getElementById('nextBtn'),
+        qCount = document.getElementById('qCount'), qScore = document.getElementById('qScore'),
+        sorter = document.getElementById('sorter');
+  function renderQ() {
+    if (qi >= Q.length) return;
+    const q = Q[qi];
+    say.textContent = q.t(); say.classList.toggle('action', !!q.act);
+    qCount.textContent = `${qi + 1} / ${Q.length}`; qScore.textContent = `Score: ${score}`;
+    if (answered) vText.textContent = q.w;
+  }
+  function answer(a) {
+    if (answered) return; answered = true;
+    const q = Q[qi], right = a === q.a; if (right) score++;
+    verdict.hidden = false; verdict.className = 'verdict ' + (right ? 'right' : 'wrong');
+    const label = q.a === 'help' ? 'Helps' : 'Hurts';
+    vTitle.textContent = right ? `Nice. ${label}.` : (q.tricky ? `Tricky one. It ${label.toLowerCase()}.` : `Nope. It ${label.toLowerCase()}.`);
+    vText.textContent = q.w; nextBtn.hidden = false;
+    nextBtn.textContent = qi === Q.length - 1 ? 'See your rank →' : 'Next one →';
+    qScore.textContent = `Score: ${score}`;
+    choices.querySelectorAll('button').forEach(b => b.disabled = true);
+    nextBtn.focus();
+  }
+  function finish() {
+    const ranks = [
+      [13, 'Legendary teammate', `Perfect score. You get it better than most adults do.`],
+      [10, 'Pro player', `You've got this down. The tricky ones catch almost everybody.`],
+      [7, 'Getting there', `Solid start. The big pattern: pressure, spotlights, and comments turn the alarm up. Normal stuff turns it down.`],
+      [0, 'Tutorial mode', `No shame. Most people would score about here before learning this. Run it again and watch for the pattern.`],
+    ];
+    const r = ranks.find(x => score >= x[0]);
+    sorter.innerHTML = `<div class="final"><div class="progress"><span>Done</span><span>Score: ${score} / ${Q.length}</span></div><div class="rank">${r[1]}</div><p>${r[2]}</p><button class="next" id="again">Play again</button></div>`;
+    document.getElementById('again').addEventListener('click', () => location.reload());
+  }
+  choices.querySelectorAll('button').forEach(b => b.addEventListener('click', () => answer(b.dataset.a)));
+  nextBtn.addEventListener('click', () => {
+    qi++; answered = false;
+    if (qi >= Q.length) return finish();
+    verdict.hidden = true; nextBtn.hidden = true;
+    choices.querySelectorAll('button').forEach(b => b.disabled = false);
+    renderQ();
+  });
+  renderQ();
+
+  // ---- loadout ----
+  const boxes = document.querySelectorAll('#loadout input'), unlock = document.getElementById('unlock');
+  function countUp() {
+    const n = [...boxes].filter(b => b.checked).length;
+    unlock.textContent = n === 7 ? 'Full loadout equipped. Respect.' : n ? `${n} / 7 equipped` : '';
+  }
+  boxes.forEach(b => {
+    if (load('fa-' + b.id) === '1') b.checked = true;
+    b.addEventListener('change', () => { store('fa-' + b.id, b.checked ? '1' : '0'); countUp(); });
+  });
+  countUp();
+})();
+</script>
+</body>
+</html>
